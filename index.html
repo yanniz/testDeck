@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test deck</title>
+  <title>Variable Importance Estimation for Random Forest Models</title>
   <meta charset="utf-8">
-  <meta name="description" content="Test deck">
-  <meta name="author" content="">
+  <meta name="description" content="Variable Importance Estimation for Random Forest Models">
+  <meta name="author" content="YZ">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -32,9 +32,9 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1>Test deck</h1>
-    <h2></h2>
-    <p><br/></p>
+    <h1>Variable Importance Estimation for Random Forest Models</h1>
+    <h2>An App to assess variable importance</h2>
+    <p>YZ<br/>Coursera Course</p>
   </hgroup>
   <article></article>  
 </slide>
@@ -42,15 +42,30 @@
 
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
-  <hgroup>
-    <h2>Read-And-Delete</h2>
-  </hgroup>
   <article data-timings="">
-    <ol>
-<li>Edit YAML front matter</li>
-<li>Write using R Markdown</li>
-<li>Use an empty line followed by three dashes to separate slides!</li>
-</ol>
+    <style>
+em {
+  font-style: italic
+}
+strong {
+  font-weight: bold;
+}
+</style>
+
+<h2>Introduction</h2>
+
+<hr>
+
+<p><br>
+<strong>What are Random forests?</strong>
+<br></p>
+
+<ul>
+<li>Random forests are a type of <code>recursive partitioning</code> method particularly well-suited to small n large p problems (Strobl et al. 2009b: 339).</li>
+<li>It is one of the best &quot;black-box&quot; <code>supervised learning</code> methods. </li>
+<li>They involve an ensemble (aka: set) of classification (or regression) trees that are calculated on random subsets of the data, using a subset of randomly restricted and selected predictors for each split in each classification tree (Strobl et al. 2008: §2; Strobl et al. 2009b; a.o.).</li>
+<li>are used not only for prediction, but also to <code>assess variable importance</code></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -58,13 +73,62 @@
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>Slide 2</h2>
+    <h2>Measuring Variable Importance</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">plot(1:10, 1:10)
+    <hr>
+
+<p> </p>
+
+<p><strong>Gini importance</strong></p>
+
+<p>With Random Forests, the <code>Gini importance index</code> is defined as the averaged Gini decrease in node impurities over all trees in the forest (it follows from the fact that the Gini impurity index for a given parent node is larger than the value of that measure for its two daughter nodes. Also helping in the interpretation is that they can output a list of predictor variables that they believe to be important in predicting the outcome. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Variable Importance Assessing App</h2>
+  </hgroup>
+  <article data-timings="">
+    <hr>
+
+<p>To help you understand the order of variable importance for a given dataset, we have developed an easy to use web application by leveraging the <code>caret</code> package in R. This package uses by defualt the Gini importance. The variable importance can be calculated by using the <code>varImp</code> function in the caret package. </p>
+
+<p>Go to the <a href="http://">app website</a> and select one of the three pre-loaded data sets, and the application will display a bar chart (uses <code>ggplot2</code> package) demonstrating the ordered variable importance of the selected data set. </p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/img/app_screenshot.png" alt="App screenshot" height="290" width="530"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Server Side Calculation</h2>
+  </hgroup>
+  <article data-timings="">
+    <hr>
+
+<p>With random forest, the <code>Variable Importance</code> is calculated via the R code below on the server side:</p>
+
+<pre><code class="r">data(iris3)
+iris$Species &lt;- as.factor(iris$Species)
+rf &lt;- randomForest(Species ~ ., data = iris)
+vi &lt;- varImp(rf)
+vi$names &lt;- row.names(vi)
+rf1 &lt;- vi[order(-vi$Overall), ]
+rf1
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+<pre><code>##              Overall        names
+## Petal.Width   44.163  Petal.Width
+## Petal.Length  43.284 Petal.Length
+## Sepal.Length   9.695 Sepal.Length
+## Sepal.Width    2.095  Sepal.Width
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -76,14 +140,26 @@
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Read-And-Delete'>
+        data-slide=1 title=''>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Slide 2'>
+        data-slide=2 title='Measuring Variable Importance'>
          2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Variable Importance Assessing App'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Server Side Calculation'>
+         4
       </a>
     </li>
   </ul>
@@ -96,7 +172,21 @@
 </body>
   <!-- Load Javascripts for Widgets -->
   
-  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
   <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->
