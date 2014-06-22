@@ -45,7 +45,7 @@ With Random Forests, the `Gini importance index` is defined as the averaged Gini
 ** **
 To help you understand the order of variable importance for a given dataset, we have developed an easy to use web application by leveraging the `caret` package in R. This package uses by defualt the Gini importance. The variable importance can be calculated by using the `varImp` function in the caret package. 
 
-Go to the [app website](http://) and select one of the three pre-loaded data sets, and the application will display a bar chart (uses `ggplot2` package) demonstrating the ordered variable importance of the selected data set. 
+Go to the [app website](https://yanniz.shinyapps.io/courseraproj/) and select one of the three pre-loaded data sets, and the application will display a bar chart (uses `ggplot2` package) demonstrating the ordered variable importance of the selected data set. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/img/app_screenshot.png" alt="App screenshot" height="290" width="530">
 
